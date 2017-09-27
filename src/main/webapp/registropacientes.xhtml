@@ -12,8 +12,10 @@
         <p:inputText value="#{HistorialPacientes.tipoId}" />
         <h:outputText value="Nombre del paciente  "/>
         <p:inputText value="#{HistorialPacientes.nombre}" />
-        <p:outputLabel for="button" value="Fecha de nacimiento  " />
-        <p:calendar id="button" value="#{HistorialPacientes.fechadeNacimiento}" showOn="button" />
+        
+        
+       <p:outputLabel for="fecha" value="Fecha de nacimiento  " />
+       <p:calendar id="fecha" value="#{HistorialPacientes.fechadeNacimiento}" pattern="dd-MM-yyyy" mask="true" />
         
         <p:outputLabel for="eps" value="Eps  " />
         <p:selectOneMenu id="eps" value="#{HistorialPacientes.eps}">
@@ -35,7 +37,9 @@
                 <h:outputText value="#{paciente.nombre}" />
             </p:column>
             <p:column headerText="Fecha de nacimiento">
-                <h:outputText value="#{paciente.fechaNacimiento}" />
+                <h:outputText value="#{paciente.fechaNacimiento}" >
+                 <f:convertDateTime pattern="MM/dd/yyyy" />
+                 </h:outputText>
             </p:column>
              <p:column headerText="Eps">
                  <h:outputText value="#{paciente.eps.nombre}" />
