@@ -4,6 +4,53 @@
       xmlns:p="http://primefaces.org/ui" 
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head></h:head>
-    <h:body>
-    </h:body>
+    <h:form id="forma">
+        <h:body>
+        <h:outputText value="Id del paciente  "/>
+        <p:inputText value="#{HistorialPacientes.id}" />
+        <h:outputText value="Tipo Id del paciente  "/>
+        <p:inputText value="#{HistorialPacientes.tipoId}" />
+        <h:outputText value="Nombre del paciente  "/>
+        <p:inputText value="#{HistorialPacientes.nombre}" />
+        <p:outputLabel for="button" value="Fecha de nacimiento  " />
+        <p:calendar id="button" value="#{HistorialPacientes.fechadeNacimiento}" showOn="button" />
+        
+        <p:outputLabel for="eps" value="Eps  " />
+        <p:selectOneMenu id="eps" value="#{HistorialPacientes.eps}">
+            <f:selectItem itemLabel="Select One" itemValue="" />
+            <f:selectItems value="#{HistorialPacientes.epses}" var="e" itemValue="#{e.nombre}" itemLabel="#{e.nombre}" />
+        </p:selectOneMenu>
+        <p:commandButton value="Registrar paciente" id="registrar" update="forma" actionListener="#{HistorialPacientes.registrarPaciente()}"  />
+        <p:dataTable id="pacientes" var="paciente" value="#{HistorialPacientes.pacientes}">
+            <f:facet name="header">
+                Pacientes
+            </f:facet>
+            <p:column headerText="Id">
+                <h:outputText value="#{paciente.id}" />
+            </p:column>
+            <p:column headerText="Tipo Id">
+                <h:outputText value="#{paciente.tipoId}" />
+            </p:column>
+            <p:column headerText="Nombre">
+                <h:outputText value="#{paciente.nombre}" />
+            </p:column>
+            <p:column headerText="Fecha de nacimiento">
+                <h:outputText value="#{paciente.fechaNacimiento}" />
+            </p:column>
+             <p:column headerText="Eps">
+                 <h:outputText value="#{paciente.eps.nombre}" />
+            </p:column>  
+            <p:column >
+              
+                <h:commandButton action = "#{HistorialPacientes.moveToPage1}"
+                value = "Registrar Consulta" />
+            </p:column>
+                
+            
+        </p:dataTable>
+        
+       </h:body> 
+    </h:form>
+    
+    
 </html>
