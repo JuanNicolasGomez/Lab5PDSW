@@ -84,7 +84,7 @@ public class RegistroConsultaBean implements Serializable {
     public void registrarConsulta(){
         try{           
             Consulta c = new Consulta(fechaConsulta, resumen, costo);
-            servicepacientes.agregarConsultaPaciente(idPacienteActual, "CC", c);
+            servicepacientes.agregarConsultaPaciente(idPacienteActual, tipoIdPaciente, c);
             consultas.add(c);
         }catch(ExcepcionServiciosPacientes e){
             e.printStackTrace();
