@@ -36,6 +36,7 @@ public class RegistroConsultaBean implements Serializable {
 
     private final ServiciosPacientes servicepacientes = ServiciosHistorialPacientesFactory.getInstance().getServiciosPaciente();
     int id;
+    String tipoIdPaciente;
     int idC;
     String tipoId;
     String nombre;
@@ -90,10 +91,11 @@ public class RegistroConsultaBean implements Serializable {
         }
     }
     
-    public void setIdP(int id){
+    public void setIdP(int id,String tipoId){
         idPacienteActual = id;
+        tipoIdPaciente=tipoId;
         try{
-            consultas.addAll(servicepacientes.consultarPaciente(idPacienteActual, "CC").getConsultas());
+            consultas.addAll(servicepacientes.consultarPaciente(idPacienteActual, tipoIdPaciente).getConsultas());
         }catch(ExcepcionServiciosPacientes e){
             e.printStackTrace();
         }
@@ -206,6 +208,12 @@ public class RegistroConsultaBean implements Serializable {
     }
     public void setidPacienteActual (int idPaciente){
        this.idPacienteActual = idPaciente;  
+    }
+    public String getTipoIdPaciente (){
+        return tipoIdPaciente;
+    }
+    public void setTipoIdPacientel (String tipoIdPaciente){
+       this.tipoIdPaciente = tipoIdPaciente;  
     }
 
 }

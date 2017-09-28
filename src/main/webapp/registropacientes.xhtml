@@ -58,7 +58,7 @@
               
                 <h:commandButton action = "#{HistorialPacientes.moveToRegistroConsulta}"
                 value = "Registrar Consulta">
-                    <f:actionListener binding="#{HistorialPacientes.setIdP(paciente.id)}" />
+                    <f:actionListener binding="#{HistorialPacientes.setIdP(paciente.id ,paciente.tipoId )}" />                    
                 </h:commandButton>
             </p:column>
                 
