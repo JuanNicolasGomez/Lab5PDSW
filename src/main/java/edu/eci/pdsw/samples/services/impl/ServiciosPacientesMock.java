@@ -176,9 +176,9 @@ public class ServiciosPacientesMock implements ServiciosPacientes {
             Consulta consulta8 = new Consulta(java.sql.Date.valueOf("2000-02-09"), "Alergia", 322);
             Consulta consulta9 = new Consulta(java.sql.Date.valueOf("2000-02-09"), "Resfriado", 322);
 
-            agregarConsultaPaciente(1, "CC", consulta1);
-            agregarConsultaPaciente(1, "CC", consulta2);
-            agregarConsultaPaciente(1, "CC", consulta3);
+            agregarConsultaPaciente(11111, "CC", consulta1);
+            agregarConsultaPaciente(11111, "CC", consulta2);
+            agregarConsultaPaciente(11111, "CC", consulta3);
             agregarConsultaPaciente(2, "CC", consulta4);
             agregarConsultaPaciente(3, "CC", consulta5);
             agregarConsultaPaciente(4, "CC", consulta6);

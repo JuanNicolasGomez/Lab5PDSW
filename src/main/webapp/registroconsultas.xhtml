@@ -3,8 +3,56 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui" xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head></h:head>
-
-    <h:body>
-    </h:body>
+    <h:form id="format">
+        <h:body>
+        <h:outputText value="Id Paciente: #{HistorialPacientes.idPacienteActual}"/>
+        <br />
+        <br />
+        <h:outputText value="Agregar nueva consulta: "/>
+        <br />
+        <br />
+        <h:outputText value="Resumen "/>
+        <p:inputText value="#{HistorialPacientes.resumen}" />
+        <br />
+        <br />
+        <h:outputText value="Costo "/>
+        <p:inputText value="#{HistorialPacientes.costo}" />
+        <br />
+        <br />
+       <p:outputLabel for="fechac" value="Fecha de la consulta  " />
+       <p:calendar id="fechac" value="#{HistorialPacientes.fechaConsulta}" pattern="MM/dd/yyyy HH:mm:ss" />
+        <br />
+        <br />
+        <p:commandButton value="Agregar Consulta " id="registrar" update="format" actionListener="#{HistorialPacientes.registrarConsulta()}"  />
+        <br />
+        <br />
+        <p:dataTable id="consultas" var="consulta" value="#{HistorialPacientes.consultas}">
+            <f:facet name="header">
+                Consultas
+            </f:facet>
+            <p:column headerText="Id">
+                <h:outputText value="#{consulta.id}" />
+            </p:column>
+            <p:column headerText="Resumen">
+                <h:outputText value="#{consulta.resumen}" />
+            </p:column>
+            <p:column headerText="Fecha y Hora">
+                <h:outputText value="#{consulta.fechayHora}" >
+                 <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                 </h:outputText>
+            </p:column>
+            <p:column headerText="Costo">
+                <h:outputText value="#{consulta.costo}" />
+            </p:column>
+        </p:dataTable>
+        <br />
+        <br />
+        <h:commandButton action = "#{HistorialPacientes.moveToRegistroPacientes}"
+                         value = "Volver">
+            <f:actionListener binding="#{HistorialPacientes.resetConsultas()}" />
+        </h:commandButton>
+        
+       </h:body> 
+    </h:form>
 
 </html>

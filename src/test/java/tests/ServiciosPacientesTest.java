@@ -20,10 +20,10 @@ import static org.junit.Assert.*;
  * 
  * Clases de equivalencia:
  *     
- *      CE1:paciente no esta registrado
+ *      CE1:agregar consulta de un paciente no registrado
  *          Resultado esperado: ExcepcionServiciosPacientes
  * 
- *      CE2:paciente esta registrado
+ *      CE2:agregar consulta de un paciente ya registrado
  *          Resultado:no se lanza ninguna excepcion
  * 
  *      CE3: agregar paciente cuando ya registrado
