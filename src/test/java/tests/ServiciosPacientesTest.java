@@ -53,7 +53,7 @@ public class ServiciosPacientesTest {
         Consulta consul=new Consulta ();
         ServiciosPacientesMock servi= new ServiciosPacientesMock();
         servi.registrarNuevoPaciente(pac);
-        servi.agregarConsultaPaciente(0,"C.C",consul);
+        servi.agregarConsultaPaciente(5645464,"C.C",consul);
         }catch (ExcepcionServiciosPacientes e){
             fail("no deja registrar una consulta de un paciente ya registrado");
         }
