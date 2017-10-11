@@ -6,6 +6,15 @@
 package edu.eci.pdsw.persistence.mybatis;
 
 import edu.eci.pdsw.persistance.EPSDAO;
+import edu.eci.pdsw.persistence.impl.mappers.EPSMapper;
+import edu.eci.pdsw.samples.entities.Eps;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 /**
  *
@@ -14,8 +23,12 @@ import edu.eci.pdsw.persistance.EPSDAO;
 public class EPSDAOMyBATIS implements EPSDAO{
 
     @Override
-    public void loadAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Eps> loadAll() {
+        SqlSessionFactory sessionfact = getSqlSessionFactory();
+        SqlSession sqlss = sessionfact.openSession();
+        EPSMapper emapper=sqlss.getMapper(EPSMapper.class);
+        List<Eps> epses = emapper.loadAllEPS();
+        return epses;
     }
 
     @Override
@@ -36,6 +49,26 @@ public class EPSDAOMyBATIS implements EPSDAO{
     @Override
     public void update() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    /**
+     * Método que construye una fábrica de sesiones de MyBatis a partir del
+     * archivo de configuración ubicado en src/main/resources
+     *
+     * @return instancia de SQLSessionFactory
+     */
+    public static SqlSessionFactory getSqlSessionFactory() {
+        SqlSessionFactory sqlSessionFactory = null;
+        if (sqlSessionFactory == null) {
+            InputStream inputStream;
+            try {
+                inputStream = Resources.getResourceAsStream("mybatis-config.xml");
+                sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+            } catch (IOException e) {
+                throw new RuntimeException(e.getLocalizedMessage(),e);
+            }
+        }
+        return sqlSessionFactory;
     }
     
 }

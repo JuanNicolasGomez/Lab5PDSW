@@ -16,6 +16,9 @@
  */
 package edu.eci.pdsw.samples.services.impl;
 
+import com.google.inject.Inject;
+import edu.eci.pdsw.persistance.EPSDAO;
+import edu.eci.pdsw.persistance.PacienteDAO;
 import edu.eci.pdsw.samples.entities.Consulta;
 import edu.eci.pdsw.samples.entities.Eps;
 import edu.eci.pdsw.samples.entities.Paciente;
@@ -31,12 +34,19 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.transaction.Transactional;
 
 /**
  *
  * @author hcadavid
  */
 public class ServiciosPacientesImpl implements ServiciosPacientes {
+    
+    @Inject
+    private PacienteDAO daoPaciente;
+    
+    @Inject
+    private EPSDAO daoEps;
 
     private final Map<Tupla<Integer, String>, Paciente> pacientes;
     private final List<Eps> epsregistradas;
@@ -47,7 +57,8 @@ public class ServiciosPacientesImpl implements ServiciosPacientes {
         epsregistradas=new LinkedList<>();
         cargarDatosEstaticos(pacientes);
     }
-
+    
+    @Transactional
     @Override
     public Paciente consultarPaciente(int idPaciente, String tipoid) throws ExcepcionServiciosPacientes {
         Paciente paciente = pacientes.get(new Tupla<>(idPaciente, tipoid));
@@ -58,7 +69,8 @@ public class ServiciosPacientesImpl implements ServiciosPacientes {
         }
 
     }
-
+    
+    @Transactional
     @Override
     public void registrarNuevoPaciente(Paciente paciente) throws ExcepcionServiciosPacientes {
         Paciente pac = pacientes.get(new Tupla<>(paciente.getId(), paciente.getTipoId()));
@@ -70,6 +82,7 @@ public class ServiciosPacientesImpl implements ServiciosPacientes {
         
     }
 
+    @Transactional
     @Override
     public void agregarConsultaPaciente(int idPaciente, String tipoid, Consulta consulta) throws ExcepcionServiciosPacientes {
         Paciente paciente = pacientes.get(new Tupla<>(idPaciente, tipoid));
@@ -82,6 +95,7 @@ public class ServiciosPacientesImpl implements ServiciosPacientes {
         }
     }
 
+    @Transactional
     @Override
     public List<Paciente> consultarPacientes() throws ExcepcionServiciosPacientes {
         List<Paciente> temp = new ArrayList<>();
@@ -89,7 +103,7 @@ public class ServiciosPacientesImpl implements ServiciosPacientes {
         return temp;
     }
 
-
+    @Transactional
     @Override
     public List<Consulta> obtenerConsultasEpsPorFecha(String nameEps, Date fechaInicio, Date fechaFin) throws ExcepcionServiciosPacientes {
         List<Consulta> temp = new ArrayList<>();
@@ -105,6 +119,7 @@ public class ServiciosPacientesImpl implements ServiciosPacientes {
         return temp;
     }
 
+    @Transactional
     @Override
     public List<Consulta> obtenerConsultasEps(String nameEps) throws ExcepcionServiciosPacientes {
         List<Consulta> temp = new ArrayList<>();
@@ -119,6 +134,7 @@ public class ServiciosPacientesImpl implements ServiciosPacientes {
         return temp;
     }
     
+    @Transactional
     @Override
     public long obtenerCostoEpsPorFecha(String nameEps, Date fechaInicio, Date fechaFin) throws ExcepcionServiciosPacientes {
         long deuda = 0;

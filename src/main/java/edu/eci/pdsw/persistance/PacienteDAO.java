@@ -5,6 +5,10 @@
  */
 package edu.eci.pdsw.persistance;
 
+import edu.eci.pdsw.persistence.impl.mappers.PacienteMapper;
+import edu.eci.pdsw.samples.entities.Paciente;
+import java.util.List;
+
 /**
  *
  * @author 2118270
@@ -14,5 +18,5 @@ public interface PacienteDAO {
     public void load();
     public void loadByID();
     public void save();
-    public void update();
+    public void update(PacienteMapper pmap, Paciente p);
 }
