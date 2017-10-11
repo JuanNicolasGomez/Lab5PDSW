@@ -9,7 +9,7 @@ import edu.eci.pdsw.samples.entities.Consulta;
 import edu.eci.pdsw.samples.entities.Eps;
 import edu.eci.pdsw.samples.entities.Paciente;
 import edu.eci.pdsw.samples.services.ExcepcionServiciosPacientes;
-import edu.eci.pdsw.samples.services.impl.ServiciosPacientesMock;
+import edu.eci.pdsw.samples.services.impl.ServiciosPacientesImpl;
 import java.util.Date;
 import org.junit.Before;
 import org.junit.Test;
@@ -43,7 +43,7 @@ public class ServiciosPacientesTest {
     @Test (expected = ExcepcionServiciosPacientes.class)
     public void testClaseDeEquivalencia1() throws ExcepcionServiciosPacientes{
         Consulta consul=new Consulta ();
-        ServiciosPacientesMock servi= new ServiciosPacientesMock();
+        ServiciosPacientesImpl servi= new ServiciosPacientesImpl();
         servi.agregarConsultaPaciente(5645464,"C.C",consul);
     }
     @Test 
@@ -51,7 +51,7 @@ public class ServiciosPacientesTest {
         try{
         Paciente pac = new Paciente(5645464,"C.C","jasdjfqsa",new Date(), new Eps());
         Consulta consul=new Consulta ();
-        ServiciosPacientesMock servi= new ServiciosPacientesMock();
+        ServiciosPacientesImpl servi= new ServiciosPacientesImpl();
         servi.registrarNuevoPaciente(pac);
         servi.agregarConsultaPaciente(5645464,"C.C",consul);
         }catch (ExcepcionServiciosPacientes e){
@@ -61,7 +61,7 @@ public class ServiciosPacientesTest {
     @Test (expected = ExcepcionServiciosPacientes.class)
     public void testClaseDeEquivalencia3() throws ExcepcionServiciosPacientes{
         Paciente pac = new Paciente(5645464,"C.C","jasdjfqsa",new Date(), new Eps());
-        ServiciosPacientesMock servi= new ServiciosPacientesMock();
+        ServiciosPacientesImpl servi= new ServiciosPacientesImpl();
         servi.registrarNuevoPaciente(pac);
         servi.registrarNuevoPaciente(pac);        
     }
@@ -71,7 +71,7 @@ public class ServiciosPacientesTest {
     public void testEquivalencia4() throws ExcepcionServiciosPacientes{
         try{
         Paciente pac = new Paciente();
-        ServiciosPacientesMock servi= new ServiciosPacientesMock();
+        ServiciosPacientesImpl servi= new ServiciosPacientesImpl();
         servi.registrarNuevoPaciente(pac);
         }catch (ExcepcionServiciosPacientes e){
             fail("Lanzo ExcepcionServiciosPacientes");
