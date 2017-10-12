@@ -16,7 +16,7 @@ import java.util.List;
 public interface PacienteDAO {
     public void loadAll();
     public void load();
-    public void loadByID();
+    public Paciente loadByID(int id, String tipoid);
     public void save();
-    public void update(PacienteMapper pmap, Paciente p);
+    public void update(Paciente p);
 }

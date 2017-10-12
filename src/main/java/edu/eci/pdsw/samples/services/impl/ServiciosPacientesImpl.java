@@ -34,6 +34,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.PersistenceException;
 import javax.transaction.Transactional;
 
 /**
@@ -55,22 +56,26 @@ public class ServiciosPacientesImpl implements ServiciosPacientes {
     public ServiciosPacientesImpl() {
         this.pacientes = new LinkedHashMap<>();
         epsregistradas=new LinkedList<>();
-        cargarDatosEstaticos(pacientes);
+        cargarDatosEstaticos(pacientes);        
     }
     
-    @Transactional
     @Override
     public Paciente consultarPaciente(int idPaciente, String tipoid) throws ExcepcionServiciosPacientes {
-        Paciente paciente = pacientes.get(new Tupla<>(idPaciente, tipoid));
-        if (paciente == null) {
-            throw new ExcepcionServiciosPacientes("Paciente " + idPaciente + " no esta registrado");
-        } else {
-            return paciente;
+        
+        try{
+            Paciente p = daoPaciente.loadByID(idPaciente, tipoid);
+            return p;
+        }catch(PersistenceException ex){
+            LOG.info(tipoid);
+            throw new ExcepcionServiciosPacientes("No se pudo consultar paciente: "+ idPaciente,ex);
         }
 
     }
+    private static final Logger LOG = Logger.getLogger(ServiciosPacientesImpl.class.getName());
     
-    @Transactional
+    
+    
+    
     @Override
     public void registrarNuevoPaciente(Paciente paciente) throws ExcepcionServiciosPacientes {
         Paciente pac = pacientes.get(new Tupla<>(paciente.getId(), paciente.getTipoId()));
@@ -82,20 +87,21 @@ public class ServiciosPacientesImpl implements ServiciosPacientes {
         
     }
 
+    
     @Transactional
     @Override
     public void agregarConsultaPaciente(int idPaciente, String tipoid, Consulta consulta) throws ExcepcionServiciosPacientes {
-        Paciente paciente = pacientes.get(new Tupla<>(idPaciente, tipoid));
-        if (paciente != null) {
-            consulta.setId(idconsulta);
-            idconsulta++;
+        
+        try{
+            Paciente paciente = daoPaciente.loadByID(idPaciente, tipoid);
             paciente.getConsultas().add(consulta);
-        } else {
-            throw new ExcepcionServiciosPacientes("Paciente " + idPaciente + " no esta registrado");
+            daoPaciente.update(paciente);
+        }catch(PersistenceException ex){
+            LOG.info(tipoid);
+            throw new ExcepcionServiciosPacientes("No se pudo agregar consulta paciente"+ idPaciente,ex);
         }
     }
 
-    @Transactional
     @Override
     public List<Paciente> consultarPacientes() throws ExcepcionServiciosPacientes {
         List<Paciente> temp = new ArrayList<>();
@@ -103,7 +109,6 @@ public class ServiciosPacientesImpl implements ServiciosPacientes {
         return temp;
     }
 
-    @Transactional
     @Override
     public List<Consulta> obtenerConsultasEpsPorFecha(String nameEps, Date fechaInicio, Date fechaFin) throws ExcepcionServiciosPacientes {
         List<Consulta> temp = new ArrayList<>();
@@ -119,7 +124,7 @@ public class ServiciosPacientesImpl implements ServiciosPacientes {
         return temp;
     }
 
-    @Transactional
+
     @Override
     public List<Consulta> obtenerConsultasEps(String nameEps) throws ExcepcionServiciosPacientes {
         List<Consulta> temp = new ArrayList<>();
@@ -134,7 +139,7 @@ public class ServiciosPacientesImpl implements ServiciosPacientes {
         return temp;
     }
     
-    @Transactional
+
     @Override
     public long obtenerCostoEpsPorFecha(String nameEps, Date fechaInicio, Date fechaFin) throws ExcepcionServiciosPacientes {
         long deuda = 0;
@@ -208,10 +213,19 @@ public class ServiciosPacientesImpl implements ServiciosPacientes {
         }
 
     }
+    
 
     @Override
     public List<Eps> obtenerEPSsRegistradas() throws ExcepcionServiciosPacientes {
-        return epsregistradas;
+        try{
+            List<Eps> epses = daoEps.loadAll();
+            return epses;
+        }catch(PersistenceException ex){
+            LOG.info("No se pudo obtener EPSs registradas");
+            throw new ExcepcionServiciosPacientes("No se pudo obtener EPSs",ex);
+            
+        }
+
     }
 
     
