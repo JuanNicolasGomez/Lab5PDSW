@@ -35,7 +35,8 @@ import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.PersistenceException;
-import javax.transaction.Transactional;
+import org.mybatis.guice.transactional.Transactional;
+
 
 /**
  *

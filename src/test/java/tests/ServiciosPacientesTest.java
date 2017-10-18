@@ -40,7 +40,7 @@ public class ServiciosPacientesTest {
     @Before
     public void setUp() {
     }
-    @Test (expected = ExcepcionServiciosPacientes.class)
+    /**@Test (expected = ExcepcionServiciosPacientes.class)
     public void testClaseDeEquivalencia1() throws ExcepcionServiciosPacientes{
         Consulta consul=new Consulta ();
         ServiciosPacientesImpl servi= new ServiciosPacientesImpl();
@@ -76,7 +76,7 @@ public class ServiciosPacientesTest {
         }catch (ExcepcionServiciosPacientes e){
             fail("Lanzo ExcepcionServiciosPacientes");
         }
-    }
+    }*/
     
     
 }
